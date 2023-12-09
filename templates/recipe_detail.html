@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Details</title>
+     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            padding: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav li {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            text-align: right;
+            background: gray;
+        }
+
+        nav a:hover {
+            background-color: #777;
+        }
+
+        h1 {
+            text-align: center;
+            color: white;
+        }
+
+        .recipe-container {
+            margin-bottom: 20px;
+
+        }
+         .recipeMax-container {
+             display: flex;
+             justify-content: center;
+              width: 50%; /* Ancho del contenedor */
+              margin: 0 auto; /* Centrar el contenedor horizontalmente */
+             background-color: #fff;
+             border: 5px solid #000;
+             padding: 10px;
+             border-radius: 5px;
+             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         }
+
+        #delete{
+            text-decoration: none;
+            background: red;
+            color:black;
+            padding: 3px;
+        }
+        #delete:hover{
+            color:white;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        h3 {
+            color: #555;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+<!-- Navbar u otra parte de tu interfaz de usuario -->
+<header>
+    <h1>{{ recipe.title }}</h1>
+<nav>
+    <ul>
+        <!-- Other tabs -->
+        <li><a href="{% url 'recipe_list' %}">Recipe List</a></li>
+    </ul>
+    <ul>
+        <!-- Other tabs -->
+        <li><a href="{% url 'new_recipe' %}">New Recipe</a></li>
+    </ul>
+  <ul>
+        <!-- Other tabs -->
+        <li><a href="{% url 'my_recipes' %}">My Recipes</a></li>
+    </ul>    <ul>
+        <!-- Other tabs -->
+        <li><a href="{% url 'logout' %}">Logout</a></li>
+    </ul>
+</nav>
+</header>
+ <div class="recipeMax-container">
+    <div class="recipe-container">
+    {% if request.user == recipe.author %}
+    <a id = "delete" href="{% url 'recipe_delete' pk=recipe.pk %}">Delete Recipe</a>
+    {% endif %}
+        <h2>{{ recipe.title }}</h2>
+        <p>Author: {{ recipe.author.username }}</p>
+        <h3>Ingredients:</h3>
+        <p>{{ recipe.ingredients }}</p>
+        <h3>Instructions:</h3>
+        <p>{{ recipe.instructions }}</p>
+    </div>
+    <div class="image-container">
+        {% if recipe.photo %}
+            <img src="{{ recipe.photo.url }}" alt="{{ recipe.title }}">
+        {% endif %}
+    </div>
+</div>
+
+</body>
+</html>
