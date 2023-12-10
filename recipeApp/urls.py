@@ -20,7 +20,7 @@ from django.urls import path
 from django.views.generic import RedirectView
 from django.conf import settings
 from django.conf.urls.static import static
-from mainapp.views import recipe_list, new_recipe, recipe_detail, signup, signin, my_recipes, delete_recipe
+from mainapp.views import recipe_list, new_recipe, recipe_detail, signup, signin, my_recipes, delete_recipe, edit_recipe
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +29,7 @@ urlpatterns = [
     path('recipes/new/', new_recipe, name='new_recipe'),
     path('recipes/<int:recipe_id>/', recipe_detail, name='recipe_detail'),
     path('recipes/<int:pk>/delete/', delete_recipe, name='recipe_delete'),
+    path('recipes/<int:pk>/edit/', edit_recipe, name='recipe_edit'),
     path('my_recipes/', my_recipes, name='my_recipes'),
     path('signup/', signup, name='signup'),
     path('login/', signin, name='login'),

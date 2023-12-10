@@ -77,4 +77,22 @@ def delete_recipe(request, pk):
         # Redirige a algún lugar si el usuario no tiene permisos para eliminar
         return redirect('recipe_list')
 
+@login_required(login_url='/login')
+def edit_recipe(request, pk):
+    recipe = get_object_or_404(Recipe, pk=pk)
+
+    # Verifica si el usuario actual es el autor de la receta
+    if request.user == recipe.author:
+        if request.method == 'POST':
+            form = RecipeForm(request.POST, request.FILES, instance=recipe)
+            if form.is_valid():
+                form.save()
+                return redirect('recipe_list')
+        else:
+            form = RecipeForm(instance=recipe)
+        return render(request, 'recipe_edit.html', {'form': form})
+    else:
+        # Redirige a algún lugar si el usuario no tiene permisos para editar
+        return redirect('recipe_list')
+
 
