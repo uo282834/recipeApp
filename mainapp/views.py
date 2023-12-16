@@ -6,8 +6,13 @@ from .forms import RecipeForm, SignUpForm, SignInForm
 
 @login_required(login_url='/login')
 def recipe_list(request):
-    recipes = Recipe.objects.all()
-    return render(request, 'recipe_list.html', {'recipes': recipes})
+    query = request.GET.get('q')  # Obtén el parámetro de búsqueda desde la URL
+    if query:
+        recipes = Recipe.objects.filter(title__icontains=query)
+    else:
+        recipes = Recipe.objects.all()
+
+    return render(request, 'recipe_list.html', {'recipes': recipes, 'query': query, 'number': len(recipes)})
 
 @login_required(login_url='/login')
 def new_recipe(request):
@@ -62,7 +67,7 @@ def signin(request):
 def my_recipes(request):
     user = request.user
     recipes = Recipe.objects.filter(author=user)
-    return render(request, 'my_recipes.html', {'recipes': recipes})
+    return render(request, 'my_recipes.html', {'recipes': recipes, 'number': len(recipes)})
 
 @login_required(login_url='/login')
 def delete_recipe(request, pk):

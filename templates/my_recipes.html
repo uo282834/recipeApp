@@ -94,6 +94,35 @@
             height: auto;
             border-radius: 5px;
         }
+              .search-form {
+        display: flex;
+        margin-bottom: 20px;
+        }
+    
+    .search-input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+    }
+
+    .search-button {
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: 1px solid #007bff;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+    }
+
+    /* Estilos para el mensaje de no resultados */
+    .no-results {
+        color: #d9534f; /* Rojo (puedes cambiarlo según tus preferencias) */
+        font-weight: bold;
+    }  
+        #numberOf{
+        text-align: right;
+    }
     </style>
 </head>
 <body>
@@ -116,7 +145,13 @@
         <li><a href="{% url 'logout' %}">Logout</a></li>
     </ul>
 </nav>
+  <p id = "numberOf">Actually {{ number }} recipes</p>
 </header>
+<form method="get" action="{% url 'recipe_list' %}" class="search-form">
+    <input type="text" name="q" placeholder="Search Recipe" value="" class="search-input">
+    <button type="submit" class="search-button">Search</button>
+</form>
+{% if recipes %}
 {% for recipe in recipes %}
     <div class="recipe-container">
         <a href="/recipes/{{ recipe.id }}">
@@ -125,6 +160,8 @@
         <p>Author: {{ recipe.author.username }}</p>
     </div>
 {% endfor %}
-
+{% else %}
+     <p class="no-results">Not Found</p>
+{% endif %}
 </body>
 </html>

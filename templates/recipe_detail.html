@@ -138,7 +138,7 @@
     <a id = "delete" href="{% url 'recipe_delete' pk=recipe.pk %}">Delete Recipe</a>
     {% endif %}
     {% if request.user == recipe.author %}
-    <a id = "edit" href="{% url 'recipe_edit' pk=recipe.pk %}">Editar Receta</a>
+    <a id = "edit" href="{% url 'recipe_edit' pk=recipe.pk %}">Edit Recipe</a>
     {% endif %}
         <h2>{{ recipe.title }}</h2>
         <p>Author: {{ recipe.author.username }}</p>
